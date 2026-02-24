@@ -1007,7 +1007,7 @@ function confirmTransfer() {
     qs('#confirmBtn').classList.add('hidden');
     show('screenVerifying');
 
-    if (attempts < 1) {
+    if (attempts < 2) {
         // Deny on 1st and 2nd attempts
         setTimeout(() => {
             show('screenFailed');
