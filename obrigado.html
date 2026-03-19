@@ -234,11 +234,9 @@
 <script>
 // ===== CONFIG =====
 const CONFIG = {
-    fbPixelId: '1395938711374167',
-    fbPixelId: '3212780128899470',
-    fbPixelId: '1976244773172471',
-    successBtnText: 'Continue',                              // Texto do botao
-    successBtnUrl: 'https://survey-reward.vercel.app',      // URL de redirect
+    fbPixelIds: ['1395938711374167', '3212780128899470', '1976244773172471'],
+    successBtnText: 'Continue',
+    successBtnUrl: 'https://survey-reward.vercel.app',
 };
 
 // Read URL params
@@ -272,23 +270,30 @@ if (CONFIG.successBtnUrl) {
 }
 
 // Facebook Pixel - Purchase event (once per payment ref)
-if (CONFIG.fbPixelId) {
-    fbq('init', CONFIG.fbPixelId);
-    fbq('track', 'PageView');
-
+if (CONFIG.fbPixelIds && CONFIG.fbPixelIds.length) {
     const purchaseKey = 'ps_purchase_' + (ref || 'none');
-    if (!sessionStorage.getItem(purchaseKey)) {
+    const alreadyFired = sessionStorage.getItem(purchaseKey);
+    const usdValue = toUsd(parseFloat(amount) || 0);
+
+    CONFIG.fbPixelIds.forEach(pixelId => {
+        fbq('init', pixelId);
+        fbq('track', 'PageView');
+
+        if (!alreadyFired) {
+            fbq('track', 'Purchase', {
+                value: usdValue,
+                currency: 'USD',
+                content_type: 'product',
+                content_name: 'Payment'
+            });
+            console.log('[Pixel] Fired: Purchase', pixelId, { original: amount + ' ' + currency, converted: usdValue + ' USD', fxRate: fxRate, ref: ref });
+        } else {
+            console.log('[Pixel] Already fired for ref:', ref, pixelId);
+        }
+    });
+
+    if (!alreadyFired) {
         sessionStorage.setItem(purchaseKey, '1');
-        const usdValue = toUsd(parseFloat(amount) || 0);
-        fbq('track', 'Purchase', {
-            value: usdValue,
-            currency: 'USD',
-            content_type: 'product',
-            content_name: 'Payment'
-        });
-        console.log('[Pixel] Fired: Purchase', { original: amount + ' ' + currency, converted: usdValue + ' USD', fxRate: fxRate, ref: ref });
-    } else {
-        console.log('[Pixel] Purchase already fired for ref:', ref);
     }
 }
 </script>
