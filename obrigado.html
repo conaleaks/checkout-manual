@@ -275,25 +275,26 @@ if (CONFIG.fbPixelIds && CONFIG.fbPixelIds.length) {
     const alreadyFired = sessionStorage.getItem(purchaseKey);
     const usdValue = toUsd(parseFloat(amount) || 0);
 
-    CONFIG.fbPixelIds.forEach(pixelId => {
-        fbq('init', pixelId);
-        fbq('track', 'PageView');
+    // 1. Init todos primeiro
+    CONFIG.fbPixelIds.forEach(pixelId => fbq('init', pixelId));
 
-        if (!alreadyFired) {
-            fbq('track', 'Purchase', {
+    // 2. PageView para todos
+    CONFIG.fbPixelIds.forEach(pixelId => fbq('trackSingle', pixelId, 'PageView'));
+
+    // 3. Purchase para todos (uma vez)
+    if (!alreadyFired) {
+        CONFIG.fbPixelIds.forEach(pixelId => {
+            fbq('trackSingle', pixelId, 'Purchase', {
                 value: usdValue,
                 currency: 'USD',
                 content_type: 'product',
                 content_name: 'Payment'
             });
             console.log('[Pixel] Fired: Purchase', pixelId, { original: amount + ' ' + currency, converted: usdValue + ' USD', fxRate: fxRate, ref: ref });
-        } else {
-            console.log('[Pixel] Already fired for ref:', ref, pixelId);
-        }
-    });
-
-    if (!alreadyFired) {
+        });
         sessionStorage.setItem(purchaseKey, '1');
+    } else {
+        console.log('[Pixel] Already fired for ref:', ref);
     }
 }
 </script>
