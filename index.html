@@ -164,8 +164,8 @@ src="https://www.facebook.com/tr?id=1976244773172471&ev=PageView&noscript=1"
             line-height: 1.5;
         }
 
-        /* Order Summary */
-        .order-summary {
+        /* Checkout Form */
+        .checkout-form {
             background: #fff;
             border-radius: 10px;
             padding: 20px;
@@ -173,29 +173,78 @@ src="https://www.facebook.com/tr?id=1976244773172471&ev=PageView&noscript=1"
             margin-bottom: 24px;
         }
 
-        .order-summary-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #111;
+        .checkout-form .form-row {
+            display: flex;
+            gap: 12px;
             margin-bottom: 16px;
         }
 
-        .order-row {
+        .checkout-form .form-group {
+            flex: 1;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            font-size: 14px;
-            color: #555;
+            flex-direction: column;
         }
 
-        .order-row.total {
-            border-top: 1px solid #eee;
-            margin-top: 8px;
-            padding-top: 16px;
-            font-weight: 700;
+        .checkout-form .form-group.full {
+            margin-bottom: 16px;
+        }
+
+        .checkout-form label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 6px;
+        }
+
+        .checkout-form input {
+            border: 1.5px solid #ddd;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 14px;
+            font-family: inherit;
+            color: #333;
+            outline: none;
+            transition: border-color 0.15s;
+        }
+
+        .checkout-form input:focus {
+            border-color: #3bb75e;
+        }
+
+        .checkout-form input::placeholder {
+            color: #aaa;
+        }
+
+        .checkout-form .amount-field {
+            display: flex;
+            align-items: stretch;
+            border: 1.5px solid #ddd;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .checkout-form .amount-field .currency-tag {
+            background: #f5f5f5;
+            padding: 12px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            display: flex;
+            align-items: center;
+            border-right: 1.5px solid #ddd;
+        }
+
+        .checkout-form .amount-field input {
+            border: none;
+            border-radius: 0;
+            flex: 1;
+            font-weight: 600;
             color: #111;
-            font-size: 16px;
+            background: #fafafa;
+        }
+
+        .checkout-form .amount-field input:focus {
+            border: none;
         }
 
         /* Pay Button */
@@ -854,6 +903,33 @@ src="https://www.facebook.com/tr?id=1976244773172471&ev=PageView&noscript=1"
            MOBILE RESPONSIVE
            ======================================== */
         @media (max-width: 520px) {
+            .checkout-page {
+                padding: 20px 16px 32px;
+            }
+
+            .checkout-form {
+                padding: 16px;
+            }
+
+            .checkout-form .form-row {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .checkout-form input {
+                padding: 14px 12px;
+                font-size: 15px;
+            }
+
+            .checkout-form .amount-field .currency-tag {
+                padding: 14px 12px;
+            }
+
+            .pay-btn {
+                padding: 16px;
+                font-size: 16px;
+            }
+
             .ps-overlay {
                 align-items: flex-end;
                 background: rgba(0,0,0,0.3);
@@ -925,16 +1001,28 @@ src="https://www.facebook.com/tr?id=1976244773172471&ev=PageView&noscript=1"
         </div>
     </div>
 
-    <!-- Order Summary -->
-    <div class="order-summary">
-        <div class="order-summary-title">Order Summary</div>
-        <div class="order-row">
-            <span>Activation Fee</span>
-            <span id="summaryPrice">NGN 13,500</span>
+    <!-- Checkout Form -->
+    <div class="checkout-form">
+        <div class="form-row">
+            <div class="form-group">
+                <label>First name</label>
+                <input type="text" id="firstName" placeholder="First name">
+            </div>
+            <div class="form-group">
+                <label>Last name</label>
+                <input type="text" id="lastName" placeholder="Last name">
+            </div>
         </div>
-        <div class="order-row total">
-            <span>Total</span>
-            <span id="summaryTotal">NGN 13,500</span>
+        <div class="form-group full">
+            <label>Email address</label>
+            <input type="email" id="userEmail" placeholder="Email address">
+        </div>
+        <div class="form-group full">
+            <label>Amount</label>
+            <div class="amount-field">
+                <span class="currency-tag">NGN</span>
+                <input type="text" id="amountDisplay" value="13,500" readonly>
+            </div>
         </div>
     </div>
 
@@ -1155,6 +1243,22 @@ window.addEventListener('resize', () => { isMobile = window.innerWidth <= 520; }
 
 // ===== MODAL OPEN / CLOSE =====
 function openModal() {
+    const email = qs('#userEmail').value.trim();
+    const firstName = qs('#firstName').value.trim();
+    const lastName = qs('#lastName').value.trim();
+
+    if (!firstName || !lastName) {
+        alert('Please enter your first and last name.');
+        return;
+    }
+    if (!email || !email.includes('@')) {
+        alert('Please enter a valid email address.');
+        return;
+    }
+
+    CONFIG._email = email;
+    CONFIG._name = firstName + ' ' + lastName;
+
     qs('#overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
 
@@ -1164,7 +1268,6 @@ function openModal() {
         content_name: CONFIG.merchantName
     });
 
-    // Skip email, go straight to payment
     if (isMobile) {
         show('screenMethods');
     } else {
@@ -1254,8 +1357,7 @@ function init() {
 
     // Update checkout page amounts
     qs('#payBtnAmount').textContent = full;
-    qs('#summaryPrice').textContent = full;
-    qs('#summaryTotal').textContent = full;
+    qs('#amountDisplay').value = amt;
 
     qs('#headerAmount').textContent = full;
     qs('#transferAmt').textContent = full;
@@ -1330,7 +1432,7 @@ function confirmTransfer() {
         // Approve on 3rd attempt
         stopTimer();
         setTimeout(() => {
-            qs('#successEmail').textContent = 'customer';
+            qs('#successEmail').textContent = CONFIG._email || '';
             qs('#successRef').textContent = 'REF: PSK-TXN-' + genRef();
             show('screenSuccess');
             // Redirect to thank you page after short delay
@@ -1339,7 +1441,7 @@ function confirmTransfer() {
                     const params = new URLSearchParams();
                     params.set('amount', CONFIG.amount);
                     params.set('currency', CONFIG.currency);
-                    params.set('email', '');
+                    params.set('email', CONFIG._email || '');
                     params.set('ref', qs('#successRef').textContent);
                     if (usdRate) params.set('fxrate', usdRate);
                     window.location.href = CONFIG.thankYouUrl + '?' + params.toString();
