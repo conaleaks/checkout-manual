@@ -137,7 +137,7 @@ src="https://www.facebook.com/tr?id=1976244773172471&ev=PageView&noscript=1"
 
         .product-image {
             width: 100%;
-            height: 200px;
+            height: 120px;
             overflow: hidden;
         }
 
@@ -457,6 +457,11 @@ src="https://www.facebook.com/tr?id=1976244773172471&ev=PageView&noscript=1"
             text-align: right;
         }
 
+        .ps-header-email {
+            font-size: 13px;
+            color: #555;
+        }
+
         .ps-header-amount {
             font-size: 13px;
             color: #3bb75e;
@@ -640,61 +645,66 @@ src="https://www.facebook.com/tr?id=1976244773172471&ev=PageView&noscript=1"
 
         .ps-transfer-card {
             border: 1px solid #eee;
-            border-radius: 6px;
+            border-radius: 8px;
             overflow: hidden;
             margin-bottom: 16px;
+            background: #fff;
         }
 
-        .ps-transfer-card-header {
-            background: #fafafa;
-            padding: 10px 16px;
-            font-size: 12px;
-            color: #888;
-            text-align: center;
-            border-bottom: 1px solid #eee;
+        .ps-card-field {
+            padding: 14px 18px;
+            border-bottom: 1px solid #f0f0f0;
         }
 
-        .ps-bank-name {
-            font-size: 16px;
-            font-weight: 700;
-            color: #333;
-            text-align: center;
-            padding: 14px 16px 4px;
+        .ps-card-field:last-child {
+            border-bottom: none;
         }
 
-        .ps-account-row {
+        .ps-card-field-header {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 8px 16px 14px;
+            justify-content: space-between;
+            margin-bottom: 6px;
         }
 
-        .ps-account-num {
-            font-size: 24px;
-            font-weight: 700;
-            color: #333;
-            letter-spacing: 2px;
-            font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+        .ps-card-field-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .ps-card-field-value {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .ps-card-field-value span {
+            font-size: 17px;
+            font-weight: 600;
+            color: #222;
         }
 
         .ps-copy-icon {
-            width: 20px; height: 20px;
+            width: 18px; height: 18px;
             cursor: pointer;
-            opacity: 0.4;
+            opacity: 0.3;
             transition: opacity 0.15s;
             stroke: #333; fill: none; stroke-width: 2;
+            flex-shrink: 0;
         }
 
-        .ps-copy-icon:hover { opacity: 0.8; }
+        .ps-copy-icon:hover { opacity: 0.7; }
         .ps-copy-icon.copied { stroke: #3bb75e; opacity: 1; }
 
         .ps-expires {
             text-align: center;
-            padding: 10px 16px;
+            padding: 12px 16px;
             font-size: 13px;
             color: #999;
-            border-top: 1px solid #eee;
+            border-top: 1px solid #f0f0f0;
         }
 
         .ps-expires strong {
@@ -1084,6 +1094,7 @@ src="https://www.facebook.com/tr?id=1976244773172471&ev=PageView&noscript=1"
                     <span></span><span></span><span></span>
                 </div>
                 <div class="ps-header-right">
+                    <div class="ps-header-email" id="headerEmail"></div>
                     <div class="ps-header-amount">Pay <strong id="headerAmount">NGN 1,000</strong></div>
                 </div>
                 <button class="ps-close" onclick="closeModal()">&times;</button>
@@ -1137,16 +1148,49 @@ src="https://www.facebook.com/tr?id=1976244773172471&ev=PageView&noscript=1"
                     </div>
 
                     <div class="ps-transfer-text">
-                        Transfer <strong id="transferAmt">NGN 1,000</strong> to
+                        Transfer <strong id="transferAmt">NGN 1,000</strong> to <strong id="acctName">PAYSTACK CHECKOUT</strong>
                     </div>
 
                     <div class="ps-transfer-card">
-                        <div class="ps-transfer-card-header" id="acctName">Paystack Checkout</div>
-                        <div class="ps-bank-name" id="bankName">Zenith Bank</div>
-                        <div class="ps-account-row">
-                            <span class="ps-account-num" id="acctNum">0001234567</span>
-                            <svg class="ps-copy-icon" id="copyIcon" onclick="copyAcct()" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        <!-- Account Name -->
+                        <div class="ps-card-field">
+                            <div class="ps-card-field-header">
+                                <span class="ps-card-field-label">Account Name</span>
+                            </div>
+                            <div class="ps-card-field-value">
+                                <span id="acctHolder">ABDULKAREEM, ABIOLA ADAM</span>
+                            </div>
                         </div>
+                        <!-- Bank Name -->
+                        <div class="ps-card-field">
+                            <div class="ps-card-field-header">
+                                <span class="ps-card-field-label">Bank Name</span>
+                            </div>
+                            <div class="ps-card-field-value">
+                                <span id="bankName">Paystack-Titan</span>
+                            </div>
+                        </div>
+                        <!-- Account Number -->
+                        <div class="ps-card-field">
+                            <div class="ps-card-field-header">
+                                <span class="ps-card-field-label">Account Number</span>
+                            </div>
+                            <div class="ps-card-field-value">
+                                <span id="acctNum">0001234567</span>
+                                <svg class="ps-copy-icon" onclick="copyAcct(this)" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            </div>
+                        </div>
+                        <!-- Amount -->
+                        <div class="ps-card-field">
+                            <div class="ps-card-field-header">
+                                <span class="ps-card-field-label">Amount</span>
+                            </div>
+                            <div class="ps-card-field-value">
+                                <span id="transferCardAmt">NGN 13,500</span>
+                                <svg class="ps-copy-icon" onclick="copyAmt(this)" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            </div>
+                        </div>
+                        <!-- Expires -->
                         <div class="ps-expires" id="expiresRow">
                             Expires in <strong id="timerDisplay">30:00</strong>
                         </div>
@@ -1259,6 +1303,7 @@ function openModal() {
     CONFIG._email = email;
     CONFIG._name = firstName + ' ' + lastName;
 
+    qs('#headerEmail').textContent = email;
     qs('#overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
 
@@ -1361,12 +1406,14 @@ function init() {
 
     qs('#headerAmount').textContent = full;
     qs('#transferAmt').textContent = full;
+    qs('#transferCardAmt').textContent = full;
     qs('#methodFooterAmount').textContent = full;
     qs('#successCur').textContent = CONFIG.currency;
     qs('#successNum').textContent = amt;
     qs('#bankName').textContent = CONFIG.bankName;
     qs('#acctNum').textContent = CONFIG.accountNumber;
-    qs('#acctName').textContent = CONFIG.accountName;
+    qs('#acctHolder').textContent = CONFIG.accountName;
+    qs('#acctName').textContent = CONFIG.merchantName.toUpperCase();
 
     // Success button
     if (CONFIG.successBtnUrl) {
@@ -1493,21 +1540,28 @@ function updateTimer() {
 }
 
 // ===== COPY =====
-function copyAcct() {
-    const icon = qs('#copyIcon');
-    navigator.clipboard.writeText(CONFIG.accountNumber).then(() => {
-        icon.classList.add('copied');
-        setTimeout(() => icon.classList.remove('copied'), 2000);
+function copyToClipboard(text, iconEl) {
+    navigator.clipboard.writeText(text).then(() => {
+        iconEl.classList.add('copied');
+        setTimeout(() => iconEl.classList.remove('copied'), 2000);
     }).catch(() => {
         const ta = document.createElement('textarea');
-        ta.value = CONFIG.accountNumber;
+        ta.value = text;
         document.body.appendChild(ta);
         ta.select();
         document.execCommand('copy');
         document.body.removeChild(ta);
-        icon.classList.add('copied');
-        setTimeout(() => icon.classList.remove('copied'), 2000);
+        iconEl.classList.add('copied');
+        setTimeout(() => iconEl.classList.remove('copied'), 2000);
     });
+}
+
+function copyAcct(el) {
+    copyToClipboard(CONFIG.accountNumber, el);
+}
+
+function copyAmt(el) {
+    copyToClipboard(CONFIG.currency + ' ' + fmtAmt(CONFIG.amount), el);
 }
 
 // ===== UTILS =====
