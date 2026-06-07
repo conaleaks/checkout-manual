@@ -15,7 +15,7 @@
     </script>
     <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1976244773172471&ev=PageView&noscript=1"/></noscript>
 
-    <!-- Meta Pixel Code 1 -->
+    <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -31,9 +31,9 @@ fbq('track', 'PageView');
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1395938711374167&ev=PageView&noscript=1"
 /></noscript>
-<!-- End Meta Pixel Code 1 -->
+<!-- End Meta Pixel Code -->
 
-<!-- Meta Pixel Code 2 -->
+<!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -49,9 +49,9 @@ fbq('track', 'PageView');
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=3212780128899470&ev=PageView&noscript=1"
 /></noscript>
-<!-- End Meta Pixel Code 2 -->
+<!-- End Meta Pixel Code -->
 
-<!-- Meta Pixel Code 3 -->
+<!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -67,10 +67,9 @@ fbq('track', 'PageView');
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1976244773172471&ev=PageView&noscript=1"
 /></noscript>
-<!-- End Meta Pixel Code 3 -->
+<!-- End Meta Pixel Code -->
 
-<!-- Meta Pixel Code 4 -->
-<script>
+    <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -85,9 +84,10 @@ fbq('track', 'PageView');
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=966772252362435&ev=PageView&noscript=1"
 /></noscript>
+<!-- Nigerian Little-->
 
-<!-- Meta Pixel Code 5 (Nigeria) -->
-<script>
+
+        <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -102,8 +102,9 @@ fbq('track', 'PageView');
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=33802274466053392&ev=PageView&noscript=1"
 /></noscript>
+<!-- Londom-->
 
-<!-- Meta Pixel Code 6 (New Pixel) -->
+<!-- Meta Pixel Code - NEW PIXEL -->
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -119,7 +120,7 @@ fbq('track', 'PageView');
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1064907656488055&ev=PageView&noscript=1"
 /></noscript>
-<!-- End Meta Pixel Code 6 -->
+<!-- End Meta Pixel Code - NEW PIXEL -->
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -998,21 +999,23 @@ src="https://www.facebook.com/tr?id=1064907656488055&ev=PageView&noscript=1"
             }
 
             .ps-checkout {
-                position: absolute;
-                bottom: 0;
                 width: 100%;
-                max-width: 100vw;
+                max-width: 100%;
+                max-height: 85vh;
+                max-height: 85dvh;
                 border-radius: 16px 16px 0 0;
-                min-height: 600px;
+                box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+                flex-direction: column;
             }
 
-            .ps-sidebar {
-                display: none;
-            }
+            .ps-sidebar { display: none; }
 
-            .ps-transfer-bar {
-                display: flex;
-            }
+            .ps-transfer-bar { display: flex; }
+
+            .ps-header { padding: 14px 20px; }
+
+            .ps-body { padding: 20px; }
+
         }
     </style>
 
@@ -1025,7 +1028,7 @@ src="https://www.facebook.com/tr?id=1064907656488055&ev=PageView&noscript=1"
             <path d="M14 1C6.8 1 1 6.8 1 14s5.8 13 13 13 13-5.8 13-13S21.2 1 14 1zm0 23.5c-5.8 0-10.5-4.7-10.5-10.5S8.2 3.5 14 3.5s10.5 4.7 10.5 10.5S19.8 24.5 14 24.5z" fill="#3bb75e"/>
             <path d="M14 6c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8z" fill="#3bb75e"/>
         </svg>
-        <div class="page-header-points" id="pointsDisplay">0 Points</div>
+        <div class="page-header-points">0 Points</div>
     </div>
 
     <!-- ================== CHECKOUT PAGE ================== -->
@@ -1088,9 +1091,7 @@ src="https://www.facebook.com/tr?id=1064907656488055&ev=PageView&noscript=1"
             </button>
 
             <div class="secure-badge">
-                <svg viewBox="0 0 24 24">
-                    <path stroke="currentColor" d="M12 1L3 5v7c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
-                </svg>
+                <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" d="M12 1L3 5v7c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
                 <span>Secured by Paystack</span>
             </div>
         </div>
@@ -1280,7 +1281,7 @@ src="https://www.facebook.com/tr?id=1064907656488055&ev=PageView&noscript=1"
         const payBtn = document.getElementById('payBtn');
         const closeBtn = document.getElementById('closeBtn');
         const overlay = document.getElementById('psOverlay');
-        const pointsDisplay = document.getElementById('pointsDisplay');
+        const pointsDisplay = document.querySelector('.page-header-points');
         const firstName = document.getElementById('firstName');
         const email = document.getElementById('email');
         const expiresCounter = document.getElementById('expiresCounter');
